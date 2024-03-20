@@ -215,29 +215,26 @@ while fuel_level > 0:
         break
 
 #3.31(다시하기)
-    def sum_of_divisors(n):
-    # 자기 자신을 제외한 약수의 합 계산
-    divisor_sum = 0
-    for i in range(1, n):
+def sum_of_divisors(n):
+    divisors_sum = 1  # 1 is a proper divisor for all numbers
+    for i in range(2, int(n ** 0.5) + 1):
         if n % i == 0:
-            divisor_sum += i
-    return divisor_sum
+            divisors_sum += i
+            if i != n // i:
+                divisors_sum += n // i
+    return divisors_sum
 
 def find_amicable_numbers(start, end):
     amicable_pairs = []
-    for num1 in range(start, end + 1):
-        num2 = sum_of_divisors(num1)
-        if num1 != num2 and num2 <= end and sum_of_divisors(num2) == num1:
-            # 친화수를 찾았을 때 리스트에 추가
-            amicable_pairs.append((num1, num2))
+    for num in range(start, end + 1):
+        pair = sum_of_divisors(num)
+        if pair > num and sum_of_divisors(pair) == num:
+            amicable_pairs.append((num, pair))
     return amicable_pairs
 
-# 1에서 20000 사이의 친화수 찾기
-start_range = 1
-end_range = 20000
-amicable_numbers = find_amicable_numbers(start_range, end_range)
-
-# 결과 출력
-print("1에서 20000 사이의 모든 친화수:")
-for pair in amicable_numbers:
-    print(pair)
+def main():
+    start = 1
+    end = 20000
+    amicable_pairs = find_amicable_numbers(start, end)
+    for pair in amicable_pairs:
+        print(f"{pair[0]}의 친화수 {pair[1]}, {pair[1]}의 친화수 {pair[0]}")
