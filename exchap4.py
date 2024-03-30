@@ -1,6 +1,3 @@
-
-
-
 #4.1
 def my_greet():
     print("환영합니다.")
